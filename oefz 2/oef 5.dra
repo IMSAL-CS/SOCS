@@ -1,0 +1,34 @@
+| a in R1
+| ptr in R2
+| qptr in geheugen
+| b in geheugen
+
+ 	 HIA.a R2,B+9   | AANPASSING FOR: bij VGL ipv deze lijn
+FOR:	 VGL R2,B
+	 VSP KL,EFOR | AANPASSING: VSP TOEGEVOEGD
+	 LEZ
+	 BIG.i R0,0(R2-) | *ptr-- = getint()  AANPASSING R2- ipv -R2
+	 SPR FOR
+ | ptr = &b[4]
+EFOR:	 HIA.a R2,B+4 |AANPASSING ADDED EFOR:   AND   HIA.a ipv HIA
+ | qptr = &b[3] + 2
+	 HIA.a R0,B+3
+	 OPT R0,2
+	 BIG R0,QPTR
+ | printing(*ptr + *qptr); printing == printint???? 
+ |AANPASSING: geen som maar apart afdrukken
+	 HIA.i R0,0(R2)
+	 |OPT R0,QPTR  REMOVED
+	 DRU
+	 HIA.i R0,QPTR
+	 DRU
+	 |MOD.w R2,2  REMOVED
+	 |VSP NUL,EIF REMOVED
+	 |OPT.w R0,1  REMOVED
+
+ 	 STP
+
+QPTR: 	RESGR 1
+B: 	RESGR 10  | AANPASSING: 10 ipv 1
+
+	EINDPR 

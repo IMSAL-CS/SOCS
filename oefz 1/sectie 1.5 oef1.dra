@@ -1,0 +1,11 @@
+HIA.w R1,0
+LEZ
+lus: VGL.w R0,-1
+VSP NUL,end
+OPT.w R1,1
+LEZ 
+SPR lus
+end: HIA R0,R1
+DRU
+STP
+

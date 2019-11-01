@@ -1,0 +1,29 @@
+
+	LEZ
+	HIA R2,R0
+	HIA.w R0,1
+	BIG R0,f
+	BIG R0,f+1
+	DRU
+	DRU
+	
+	HIA.w R3,2
+lus:	VGL R3,R2
+	VSP GRG, efor
+	HIA.w R0,0
+	OPT R0,f-1(R3)
+	OPT R0,f-2(R3)
+	BIG R0,f(R3)
+	DRU 
+	OPT.w R3,1
+	SPR lus
+efor:	STP
+	
+
+f: RESGR 100
+EINDPR
+
+tmp -> R1
+n -> R2
+i -> R3
+

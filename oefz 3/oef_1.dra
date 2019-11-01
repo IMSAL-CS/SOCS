@@ -1,0 +1,125 @@
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+ | maak plaats voor variable 'vertrek'
+AFT.w R9,1
+
+| <OPROEP>
+| slaag registers op die potentieel gebruikt werden in de '...' om later te herstellen omdat in de 2de ... mss gebruikt worden     
+BST R0	
+BST R1
+BST R2
+
+| parameters oproep initialiseren:
+HIA.a R0,5000 | stapel: afstand
+BST R0	
+BST R6 | stapel: land 2
+
+HIA R1,R5 | register: continent
+HIA R2,-2(R8) | register: land1
+
+| functie oproepen:
+BST R8 | zet oude R8 op stapel
+HIA R8,R9
+SBR voorstel
+HST R8 | vervang R8 met oude R8
+
+| haal de parameters uit stapel
+OPT.w R9,2 
+
+| restore registers
+HST R2
+HST R1
+HST R0
+| </OPROEP>
+
+| haal variabele 'vertrek' van stapel, stapel is nu leeg behalve TKA (-1) en oude R8 (-1)
+OPT.w R9,1 
+
+STP
+
+
+
+voorstel:
+
+| protect R6-> R5   AND   maak plek op stapel
+BST R6 | protect registers R6->R5
+BST R5
+AFT.w R9,2 | maak plaats op stapel
+
+| <OPROEP>
+| gebruikte R1->R2 opslaan voor oproep
+BST R1
+BST R2
+BST R3 
+
+| parameters initialiseren
+HIA R0,1(R8) 
+BST R0	|land2 -> stapel
+BST R6 |klasse -> stapel
+BST R1 |continent -> stapel
+
+HIA R1,R2 | land1 -> R1   
+HIA R2,R5 | luxe -> R2
+HIA.w R3,10 | 10 -> R3
+
+| functie oproep 'bereken' 
+BST R8 | zet oude R8 op stapel
+HIA R8,R9
+SBR bereken | resultaat doorgegeven in R0
+HST R8 | restore oude R8
+
+| parameters uit stapel halen
+OPT.w R9,2
+
+| restore R1->R2
+HST R3 
+HST R2
+HST R1
+| </OPROEP>
+
+| berekening geld
+BST R0 | sla bereken(land1,land2,...) op
+HIA R0,2(R8)
+VER.w R0,2 | R0 = afstand * 2
+OPT R0,-3(R8) | R0 = afstand *2 + bezit
+AFT R0, -4(R8) | R0 = afstand *2 + bezit - bereken(land1,land2,...)
+DRU
+OPT.w R9,1 | haal bereken(land1,land2,...) uit stapel
+
+| restore R6-> R5   AND   verwijder van stapel
+BST R5 | restore registers R6->R5
+BST R6
+OPT.w R9,2 |verwijder van stapel
+
+KTG
+
+
+bereken:
+
+| protect R6-> R4   AND   maak plek op stapel
+BST R6
+BST R5
+BST R4
+AFT.w R9,3
+
+||||||||||||||||||||||||||| R4 niet opslaan? ||||||||||||||||||||||||||||||||||||||
+HIA R4,2(R8) | totaal (R4) <- categorie * kost - korting - bon
+VER R4,R2
+AFT R4,R6
+AFT R4,-2(R8)
+
+HIA R0,R4
+OPT R0,-4(R8) |return totaal + vervoer
+
+| restore R6-> R4   AND   verwijder van stapel
+OPT.w R0,3
+HST R4 
+HST R5
+HST R6
+
+
+
+EINDPR

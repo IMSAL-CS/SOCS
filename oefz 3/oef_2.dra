@@ -1,0 +1,111 @@
+| init stapel
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+| maak plaats op stapel
+AFT.w R9,9
+
+LEZ
+BIG R0,r
+HIA.w R6,1
+for: VGL.w R6,10
+VSP GRG,efor
+
+LEZ
+BIG R0,r(R6) |r[i] = getint()
+
+| <oproep>
+|parameters
+HIA R0,r-1(R6)
+HIA R5,R0 		      | R5 <- r[i-1] voor later
+HIA R1,r(R6) | R1 <- r[i]
+HIA R4,R1		      | R4 <- r[i] voor later
+
+BST R6
+|BST R5   NIET NODIG
+|BST R4
+BST R0 | stapel <- r[i-1]
+
+BST R8
+HIA R8,R9
+SBR kgv
+HST R8
+
+OPT.w R9,1 | haal parameter uit stapel
+|HST R4
+|HST R5
+HST R6
+|</oproep>
+
+HIA R2,R6 | R2 <- i
+AFT.w R2,1 | R2 <- i-1
+OPT R2,R8 | E2 <- R8 + i-i 
+BIG R0,-10(R2) |g[i-1]
+
+|printint(r[i-1], r[i], g[i-1]); 
+HIA R0,R5
+DRU
+HIA R0,R4
+DRU
+HIA R0,-10(R2)
+DRU
+
+OPT.w R6,1
+SPR for
+
+efor: OPT.w R9,9 | haal van stapel
+STP
+
+
+
+kgv:
+AFT.w R9,1
+
+|<oproep>
+BST R1 | protect R1
+BST R1 | zet parameter op stapel
+HIA R1, 1(R8) | R1 <- a 
+
+BST R8
+HIA R8,R9
+SBR ggd
+HST R8
+
+OPT.w R9,1
+HST R1 | recover R1
+|</oproep>
+
+BIG R0,-2(R8)
+HIA R0,R1
+VER R0,1(R8)
+DEL R0,-2(R8)
+
+OPT.w R9,1
+KTG
+
+
+ggd:
+
+BST R6 | protect R6
+HIA R6,R1
+MOD R6,1(R8)
+
+while: VGL.w R6,0
+VSP NUL,ewhile
+
+HIA R1,1(R8)
+BIG R6,1(R8)
+HIA R6, R1
+MOD R6,1(R8)
+SPR while
+
+ewhile: HIA R0,1(R8)
+HST R6 | recover R6
+KTG
+
+
+
+r: RESGR 10
+EINDPR

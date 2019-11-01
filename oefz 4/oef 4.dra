@@ -1,0 +1,61 @@
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+AFT.w R9,5
+LEZ
+HIA R6,R0
+VGL.w R6,5
+VSP GR,end
+|oproep lees
+BST R6 | n
+HIA.a R1, -6(R8)
+BST R8
+HIA R8,R9
+SBR lees
+HST R8
+HST R6
+
+|oproep schrijfOmgekeerd
+HIA R1,R6
+HIA.a R2,-6(R8)
+BST R8
+HIA R8,R9
+SBR schrijfOmgekeerd
+HST R8
+
+end: OPT.w R9,5
+STP
+
+
+lees:
+BST R6
+HIA.w R6,0
+forlees: VGL R6,1(R8)
+VSP GRG,endlees
+LEZ
+HIA R2,R1
+OPT R2,R6
+BIG R0,0(R2)
+OPT.w R6,1
+SPR forlees
+
+endlees: HST R6
+KTG
+
+
+schrijfOmgekeerd:
+BST R6
+OPT R2,R1
+OPT.w R2,-1
+HIA.w R6,0
+forschrijf: VGL R6,R1
+VSP GRG,endschrijf
+HIA R0,0(R2)
+DRU
+AFT.w R2,1
+OPT.w R6,1
+SPR forschrijf
+endschrijf: HST R6
+KTG

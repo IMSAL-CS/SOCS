@@ -1,0 +1,27 @@
+| i -> R2
+| j -> R3
+| som -> R4
+| idx -> R0
+
+	HIA.w R2,0
+for:	VGL.w R2,5
+	VSP GRG,efor
+ 	LEZ
+	HIA.w R4,0
+	HIA R5, R0
+
+	HIA.w R3,0
+for2:	VGL R3, R5
+	VSP GRG,efor2
+	OPT R4,a(R3+) |+ moet weg als zonder index register
+	|OPT.w R3, 1    Dit moet erbij als zonder index register
+	SPR for2
+efor2:	HIA R0,R4
+	DRU
+	OPT.w R2,1
+	SPR for
+
+efor:	STP
+
+a: 1;2;3;4;5;6;7;8;9;10
+EINDPR

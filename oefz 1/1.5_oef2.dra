@@ -1,0 +1,47 @@
+HIA.w R2,0
+HIA.w R3,0
+HIA.w R4,0
+HIA.w R5,0
+LEZ
+HIA R6,R0
+
+lus: VGL R6,R2
+VSP NPOS,end
+LEZ
+OPT.w R2,1
+
+VGL.w R0,0
+VSP NPOS, naif
+OPT.w R3,1
+SPR eindelus
+
+naif: VGL.w R0,0
+VSP NNEG, naelse
+OPT.w R4,1
+SPR eindelus
+
+naelse: VGL.w R0,0
+VSP NNUL, eindelus
+OPT.w R5,1
+eindelus: SPR lus
+
+end: HIA R0,R5
+DRU
+HIA R0,R3
+DRU
+HIA R0,R4
+DRU
+
+STP
+
+
+
+
+
+
+EINDPR
+aantal -> R2
+apos -> R3
+aneg -> R4
+anul -> R5
+n -> R6

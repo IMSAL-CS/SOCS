@@ -1,0 +1,33 @@
+LEZ
+HIA R1,R0
+HIA R2,R0
+
+wh: VGL.w R2,1   |while 1
+VSP KL,ewh
+HIA R3,R1
+
+wh2: VGL.w R3,0	|while 2
+VSP KLG,ewh2
+HIA R4,R2
+VER R4,R3 |a*b
+HIA R0,R2
+DRU
+HIA R0,R3
+DRU
+HIA R0,R4
+DRU
+AFT.w R3,1
+SPR wh2
+
+ewh2: AFT.w R2,1
+SPR wh
+
+ewh: STP
+
+
+
+EINDPR
+aantal -> R1
+a -> R2
+b -> R3
+prod -> R0

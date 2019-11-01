@@ -1,0 +1,56 @@
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+LEZ
+BST R0 |m
+VGL.w R0,100
+VSP GRG,end
+|oproep
+BST R0 |parameter n
+HIA.a R0,f
+BST R0 |parameter r[]
+
+BST R8
+HIA R8,R9
+SBR fibon
+HST R8
+
+OPT.w R9,2 | n en r[]
+|/oproep
+HIA.w R6,0
+for: VGL R6,-2(R8)
+VSP GRG,end
+HIA R0,f(R6+)
+DRU
+SPR for
+
+end: OPT.w R9,1 |m
+STP
+
+
+fibon:
+BST R6 |protect R6
+
+HIA.w R0,1
+HIA R1,1(R8) |adres van r in R1
+BIG R0,0(R1)
+BIG R0,1(R1)
+
+HIA.w R6,2 | i = 2
+fibfor: VGL R6,2(R8)
+VSP GRG,nafor
+HIA R2,R1
+OPT R2,R6 | i + r -> R2
+HIA R0,-1(R2)
+OPT R0,-2(R2)
+BIG R0,0(R2)
+OPT.w R6,1
+SPR fibfor
+
+nafor: HST R6 |recover R6
+KTG
+
+f: RESGR 100
+EINDPR

@@ -1,0 +1,19 @@
+
+HIA.w R1,0
+
+lus: LEZ		|lus
+VSP NUL,break
+HIA R2,R0
+MOD.w R2,2
+VSP NUL,naif
+OPT.w R0,1
+naif: DRU
+OPT.w R1,1
+VGL.w R1,10
+VSP KL,lus
+break: STP
+
+EINDPR
+
+i -> R1
+getal -> R2

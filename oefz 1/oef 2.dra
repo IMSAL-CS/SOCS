@@ -1,0 +1,12 @@
+ LEZ
+lus: VSP NPOS,end | ? waar werd de conditiecode gezet?
+ HIA R1,som
+ OPT R1,R0
+ BIG R1,som
+ AFT.w R0,1
+ SPR lus
+end: HIA R0,som
+ DRU
+ STP
+som: 0
+ EINDPR 

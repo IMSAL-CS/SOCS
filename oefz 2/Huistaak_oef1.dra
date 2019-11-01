@@ -1,0 +1,26 @@
+| i -> R2
+| p -> R3
+
+HIA.w R2,9
+for1: VGL.w R2,0
+VSP KLG,efor1
+LEZ
+BIG R0,a(R2) |a[i]
+VER.w R0,-1
+BIG R0,a-1(R2)
+AFT.w R2,2
+SPR for1
+
+|bewerking op a
+
+efor1: HIA.a R3,a
+for2: VGL.a R3,a+9
+VSP GR, efor2
+HIA.i R0,0(R3+)
+DRU
+SPR for2
+
+efor2: STP
+
+a: RESGR 10
+EINDPR

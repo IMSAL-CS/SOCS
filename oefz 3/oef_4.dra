@@ -1,0 +1,63 @@
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+AFT.w R9,1
+LEZ
+BIG R0,-2(R8)
+DRU
+
+|<oproep>
+BST R0 |parameter
+BST R8
+HIA R8,R9
+SBR fibon 
+HST R8
+OPT.w R9,1 |parameter van stapel
+|</oproep>
+DRU 
+
+OPT.w R9,1
+STP
+
+
+
+fibon:
+HIA R1,1(R8)
+
+VGL.w R1,0
+VSP GEL,base
+VGL.w R1,1
+VSP GEL,base
+SPR eif
+base: HIA.w R0,1
+KTG
+
+eif: |oproep 1
+HIA R1,1(R8)
+AFT.w R1,1
+BST R1
+BST R8
+HIA R8,R9
+SBR fibon
+HST R8
+OPT.w R9,1
+|einde oproep
+BST R0 | oplossing oproep 1 opslaan
+
+|oproep 2
+HIA R1,1(R8)
+AFT.w R1,2
+BST R1
+BST R8
+HIA R8,R9
+SBR fibon
+HST R8
+OPT.w R9,1
+|einde oproep 2
+HST R2 | oplossing oproep 1 recoveren
+OPT R0,R2
+KTG
+
+EINDPR

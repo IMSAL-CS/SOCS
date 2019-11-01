@@ -1,0 +1,64 @@
+|init stapel:
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+AFT.w R9,3 | plaats maken op stapel
+HIA.w R0,5
+BIG R0,-2(R8)
+HIA.w R6,3
+
+|<oproep>
+| parameters 
+HIA R1,-2(R8) |a
+HIA.a R2,-3(R8) |skw
+HIA.w R0,4
+OPT R0,R6
+BST R0 |b
+HIA.a R0,-4(R8)
+BST R0 |vkw
+
+BST R8
+HIA R8,R9
+SBR kwadraat
+HST R8
+
+OPT.w R9,2
+|</oproep>
+
+HIA R0,-3(R8)
+DRU
+HIA R0,-4(R8)
+DRU
+
+OPT.w R0,3 | verwijderen v stapel
+STP
+
+
+
+kwadraat:
+AFT.w R9,2 | maak plek
+
+HIA R0,R1
+VER R0,R0
+BIG R0,-2(R8) |aa
+
+HIA R0,2(R8)
+VER R0,R0
+BIG R0,-3(R8) |bb
+
+OPT R0,-2(R8)
+BIG R0,0(R2) |*skw = aa + bb
+
+AFT R0,-3(R8)
+AFT R0,-3(R8)
+BST R3
+HIA R3,1(R8)
+BIG R0,0(R3)
+HST R3 |*vkw = aa - bb
+
+OPT.w R9,2
+KTG
+
+EINDPR

@@ -1,0 +1,90 @@
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+LEZ 
+BST R0 |m
+VGL.w R0,100
+VSP GRG,end
+|oproep
+HIA R1,-2(R8)
+HIA.a R2,f
+
+BST R8
+HIA R8,R9
+SBR fibon
+HST R8
+|/oproep
+HIA.w R6,0
+for: VGL R6,-2(R8)
+VSP GRG,end
+HIA R0,f(R6+)
+DRU
+SPR for
+
+end: OPT.w R9,1 |m
+STP
+
+
+fibon: 
+HIA.w R0,1
+BIG R0,0(R2)
+BIG R0,1(R2)
+
+VGL.w R1,1
+VSP KLG,endfibon
+|oproep
+BST R1
+BST R2
+|BST R3
+
+HIA R3,R2
+OPT.w R3,2
+
+HIA.w R2,2
+BST R8
+HIA R8,R9
+SBR recFibon
+HST R8
+
+|HST R3
+HST R2
+HST R1
+endfibon: KTG
+
+
+
+recFibon:
+BST R3
+BST R6
+HIA R0,-1(R3)
+OPT R0,-2(R3)
+BIG R0,0(R3)
+
+OPT.w R2,1
+VGL R2,R1
+VSP GR,endrecFibon
+|oproep
+BST R1
+BST R2
+BST R3
+
+OPT.w R3,1
+BST R8
+HIA R8,R9
+SBR recFibon
+HST R8
+
+HST R3
+HST R2
+HST R1
+|/oproep
+endrecFibon: HST R6
+HST R3
+KTG
+
+
+
+f: RESGR 100
+EINDPR

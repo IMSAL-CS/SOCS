@@ -1,0 +1,42 @@
+
+HIA.w R2,???
+HIA.w R1,???
+
+HIA.a R0,a(R1)
+BIG R0,ptr
+...
+HIA R3,R1
+VER.w R3,2
+AFT.w R3,3
+HIA R0,a(R3)
+HIA.w R3,4
+OPT R0,a(R3)
+HIA.i R3,0(R0)
+OPT.w R3,1
+BIG R3,ptr
+...
+HIA R6,R1
+VER R6,-1
+HIA.a R5,a+50(R6)
+AFT.w R5,2
+...
+HIA R0,a(R2)
+AFT.w R0,3
+HIA R3,a(R0)
+AFT R3,4
+OPT R3,1
+
+
+
+
+
+
+a: RESGR 100
+ptr: 3000
+EINDPR
+
+i -> R1
+n -> R2
+temp -> R3
+qptr -> R5
+ptr -> 3000

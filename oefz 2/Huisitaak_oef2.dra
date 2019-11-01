@@ -1,0 +1,63 @@
+| i-> R1
+| j-> R2
+| k -> R3
+| h -> R4
+| k2 -> R5
+| h2 -> R6
+|inlezen
+	HIA.w R1,0   | i=0
+fori:	VGL.w R1,10  | i<10?
+	VSP   GRG,efi
+	HIA   R4,R1
+	VER.w R4,10  | h = 10 * i
+	HIA.w R2,0   | j=0
+forj:	VGL.w R2,10  | j<10?
+	VSP   GRG,efj
+	HIA   R3,R4
+	OPT   R3,R2 | k = h+j
+	LEZ
+	BIG   R0,M(R3) | M[k]=...
+	OPT.w R2,1 | j++
+	SPR   forj
+efj:	OPT.w R1,1 | i++
+	SPR   fori
+
+|complexe bewerking
+efi:	HIA.w R1,1
+fori2:	VGL.w R1,10
+	VSP GR,efi2
+	
+	HIA   R4,R1  | k = 10(i-1) + (j-11) = 10 * i + j - 21
+	VER.w R4,10  
+	AFT.w R4,21  | h = 10 * i - 21
+
+	HIA   R6,R1  | k2 = 10(10-i)+(20-j) = -10 * i - j + 120
+	VER.w R6,-10
+	OPT.w R6,120 | h2 = -10 * i + 120	
+
+	HIA.w R2,20
+forj2:	VGL.w R2,10
+	VSP KLG,efj2
+	
+	HIA   R3,R4
+	OPT   R3,R2 | k = h+j
+
+	HIA   R5,R6
+	OPT   R5,R2 | k2 = h2 +j
+
+	HIA   R7,M(R5) | R7  <-  M[10-i][20-j]
+	HIA   R0,M(R3)
+	OPT   R0,R7    | R0  <-  M[i-1][j-11] + M[10-i][20-j]
+	BIG   R0,M(R3) | M[i-1][j-11] + M[10-i][20-j] ->  M[i-1][j-11]
+	
+	AFT.w R2,1	
+	SPR forj2
+efj2:	OPT.w R1,1
+	SPR fori2
+
+efi2:	STP
+
+	
+M:	RESGR 10*10
+	EINDPR
+
