@@ -1,0 +1,71 @@
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+AFT.w R9,4 | struct student stud
+
+HIA.w R0,1
+BIG R0,-4(R8)
+HIA.w R0,2
+BIG R0,-3(R8)
+HIA.w R0,3
+BIG R0,-2(R8)
+
+|studenten[stdIdx] = stud
+HIA R0,-5(R8)
+HIA R1,R5 |R1 <- stdIdx
+VER.w R1,4 |stdIdx * 4 want 4 elementen in een student Struct
+BIG R0,studenten(R1+)
+
+HIA R0,-4(R8)
+BIG R0,studenten(R1+)
+
+HIA R0,-3(R8)
+BIG R0,studenten(R1+)
+
+HIA R0,-2(R8)
+BIG R0,studenten(R1)
+
+|examens[exIdx].student = &studenten[stdIdx];
+HIA R1,R5 |R1 <- stdIdx
+VER.w R1,4
+HIA.a R2,studenten(R1) |R2 <- &studenten[stdIdx]
+
+HIA R1,R4  |R1 <- exIdx
+VER.w R1,4
+OPT.w R1,3
+BIG R2,examens(R1)
+
+|if (examens[exIdx].student->faciliteiten)
+HIA R1,R4  |R1 <- exIdx
+VER.w R1,4
+OPT.w R1,2 | R1 <- [exIdx].duur
+HIA.w R2,3  
+BIG R2,examens(R1) |examens[exIdx].duur = 3;
+
+HIA R2,R4 
+VER.w R2,4
+OPT.w R2,3 | R2 <- [exIdx].student
+HIA R0,examens(R2) |examens[exIdx].student
+
+HIA R0,3(R0) |examens[exIdx].student->faciliteiten in R0
+VSP NUL,naif
+HIA.w R2,4
+BIG R2,examens(R1)
+
+naif:
+HIA R1,R4
+AFT.w R1,5
+VER.w R1,4
+HIA.a R6,examens+3(R1) |wzStudent = examens[exIdx - 5].student;
+HIA.w R0,3
+BIG R0,2(R6) |wzStudent->richting = 3;
+
+OPT.w R9,4
+STP
+
+
+RESGR examens 4000
+RESGR studenten 800
+EINDPR

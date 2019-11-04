@@ -1,0 +1,43 @@
+| initialisatie stapel
+HIA.w R0,-1
+BST R0
+HIA R8,R9
+BST R0
+
+| cursus[k].aantalblz = 180
+HIA.w R0,180
+HIA R1,R6
+VER.w R1,2
+BIG R0,cursus(R1)
+
+| cursus[3].gestudeerd = cursus[j-2].gestudeerd
+HIA R0,-3(R8) 
+AFT.w R0,2 | R0 <- j - 2
+VER.w R0,2
+OPT.w R0,1  | R0 <- (j-2)*2 + 1
+HIA R0,cursus(R0) |R0 <- cursus[j-2]
+| R1 <- 3*2+1
+HIA.w R1,7
+BIG R0,cursus(R1) | cursus[3].gestudeerd = cursus[j-2].gestudeerd
+
+|for:
+HIA.a R0,cursus
+BIG R0,-2(R8) |wz <- &cursus
+OPT.w R0,5 | R0 <- &cursus[5]
+
+for: VGL R0,-2(R8)
+VSP KL,efor
+HIA.w R1,0
+HIA R2,-2(R8)
+BIG R1,1(R2)
+OPT.w R2,2
+BIG R2,-2(R8)
+SPR for
+
+
+efor: STP
+
+
+STP
+cursus: RESGR 12
+EINDPR
